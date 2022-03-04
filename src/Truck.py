@@ -37,3 +37,9 @@ class Truck:
     def get_all_other_packages(self, package):
         all_other_packages = [x for x in self.packages_on_truck if x != package]
         return all_other_packages
+
+    def packages_still_on_truck(self):
+        if len(self.packages_on_truck) == 0:
+            return False
+        else:
+            return True
