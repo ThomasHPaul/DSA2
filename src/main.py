@@ -42,18 +42,6 @@ def main():
             if start_address == other_package.delivery_address:
                 ordered_addresses.append((0, other_package))
                 truck_1.deliver_packages(other_package.delivery_address, TEST_TIME)
-                ### When this for loop assigns 0 and the list is sorted, other packages besides the one chosen to
-                ### deliver are moved ahead and the original package for delivery is passed by
-                ### ANOTHER CONCERN is that the initial list sorting happens AFTER 0 has been assigned. REALLY first
-                ### an overall sort should happen THEN AFTER the next destination is decided, other packages with the
-                ### same address can have their distance traveled, set to 0!!!
-
-        # Sort dst_list to grab the shortest distance
-        # dst_list.sort(key=lambda x: x[0])
-        #
-        # # Add shortest distance to ordered_addresses
-        # ordered_addresses.append(dst_list[0])
-        # truck_1.deliver_packages(dst_list[0][1].delivery_address, 0)
 
     # Print for troubleshooting
     print("ordered addresses: ")
