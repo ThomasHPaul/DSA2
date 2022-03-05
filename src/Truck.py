@@ -1,5 +1,8 @@
+import TimeTracker
+
+
 class Truck:
-    SPEED = 18.0  # Miles per Hour
+    SPEED = 0.299999999999  # Miles per Minute
     MAX_PACKAGES = 16  # Maximum amount of packages truck can carry at once
     HOME_ADDRESS = '4001 South 700 East (84107)'
 
@@ -8,18 +11,21 @@ class Truck:
 
     def __init__(self, truck_id):
         self.truck_id = truck_id
+        self.timeTracker = TimeTracker.TimeTracker()
 
     def __repr__(self):
         pass  # list total miles traveled, packages currently loaded
 
-    def deliver_packages(self, current_address, time):
+    def deliver_packages(self, current_address, miles):
         for package in self.packages_on_truck:
             if package.delivery_address == current_address:
-                package.deliver_package(time)
+                minutes_time_delta = self._calculate_time_delta_from_miles(miles)
+                self.timeTracker.add_time(minutes_time_delta)
+                package.deliver_package(self.timeTracker.convert_to_military_time())
                 self.packages_on_truck.remove(package)
 
-    def calculate_time_delta_from_miles(self, miles):
-        time_delta = round(miles / self.SPEED, 2)
+    def _calculate_time_delta_from_miles(self, miles):
+        time_delta = miles / self.SPEED
         return time_delta
 
     def drive(self, miles):
