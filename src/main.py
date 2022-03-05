@@ -8,6 +8,7 @@ DISTANCE_SRC = r"../data/prepared_distance_table_v4.csv"
 
 TEST_TIME = 0
 
+
 def main():
     packages = PackageLoader.load_data(PACKAGE_SRC)
     hash_table = ChainingHashTable()
@@ -24,24 +25,26 @@ def main():
         truck_1.load_package(package)
 
     ordered_addresses = []
-    start_address = "4001 South 700 East"
-    dst_list = []
+    current_address = "4001 South 700 East"
+
 
     # Sorting algo
     while truck_1.packages_still_on_truck():
+        dst_list = []
 
         # Load package distances & select the first closest destination
         for package in truck_1.get_packages_on_truck():
-            dst_list.append((distances[start_address][package.delivery_address], package))
+            dst_list.append((distances[current_address][package.delivery_address], package))
 
         dst_list.sort(key=lambda x: x[0])
         ordered_addresses.append(dst_list[0])
-        truck_1.deliver_packages(dst_list[0][1].delivery_address, TEST_TIME)
-
-        for other_package in truck_1.get_all_other_packages(ordered_addresses[0][1]):
-            if start_address == other_package.delivery_address:
-                ordered_addresses.append((0, other_package))
-                truck_1.deliver_packages(other_package.delivery_address, TEST_TIME)
+        i = 1
+        current_address = dst_list[0][1].delivery_address
+        truck_1.deliver_packages(current_address, TEST_TIME)
+        for miles, package in dst_list:
+            if package.delivery_address == current_address and package != dst_list[0][1]:
+                ordered_addresses.append((0, package))
+                truck_1.deliver_packages(package.delivery_address, TEST_TIME)
 
     # Print for troubleshooting
     print("ordered addresses: ")
