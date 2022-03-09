@@ -16,19 +16,22 @@ class Truck:
     def __repr__(self):
         pass  # list total miles traveled, packages currently loaded
 
-    def deliver_packages(self, current_address, miles):
-        for package in self.packages_on_truck:
-            if package.delivery_address == current_address:
-                minutes_time_delta = self._calculate_time_delta_from_miles(miles)
-                self.timeTracker.add_time(minutes_time_delta)
-                package.deliver_package(self.timeTracker.convert_to_military_time())
-                self.packages_on_truck.remove(package)
+    def drive_route_deliver_packages(self):
+        for miles, package in self.packages_on_truck:
+            self._drive(miles)
+            self._deliver_package(miles, package)
+        self.packages_on_truck = []
+
+    def _deliver_package(self, miles, package):
+        minutes_time_delta = self._calculate_time_delta_from_miles(miles)
+        self.timeTracker.add_time(minutes_time_delta)
+        package.deliver_package(self.timeTracker.convert_to_military_time())
 
     def _calculate_time_delta_from_miles(self, miles):
         time_delta = miles / self.SPEED
         return time_delta
 
-    def drive(self, miles):
+    def _drive(self, miles):
         self.total_miles_traveled += miles
 
     def get_total_miles_traveled(self):
