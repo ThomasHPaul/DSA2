@@ -8,6 +8,7 @@ class Package:
         self.weight = weight
         self.status = 'at the hub'
         self.other_packages_on_truck = []
+        self.delivery_time = None
 
     def load_package_on_truck(self, truck_number):
         self.status = f'en route on truck {truck_number}'
@@ -16,11 +17,18 @@ class Package:
     def deliver_package(self, time):
         # time should be a time_delta that is converted when displayed
         # by the interface
+        self.delivery_time = time
         self.status = f'delivered at {time}'
         return self
 
     def get_status(self):
         return self.status
+
+    def is_package_unscheduled(self):
+        if self.delivery_time is None:
+            return True
+        else:
+            return False
 
     def __repr__(self):
         return f'Package {self.id} is {self.status}'

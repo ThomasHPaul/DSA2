@@ -2,6 +2,7 @@ from ChainingHashTable import ChainingHashTable
 import PackageLoader
 import DistanceLoader
 import Truck
+import SortingAlgo
 
 PACKAGE_SRC = r"../data/prepared_package_table_v2.csv"
 DISTANCE_SRC = r"../data/prepared_distance_table_v4.csv"
@@ -28,46 +29,37 @@ def main():
 
     distances = DistanceLoader.load_data(DISTANCE_SRC)
     package_ids_to_deliver_truck1 = [12, 13, 14, 15, 16, 18, 19, 20, 38, 33, 4, 8, 26, 34, 7, 29]
+    unsorted_packages_for_truck_1 = [hash_table.search(id) for id in package_ids_to_deliver_truck1]
+
+    # Plan delivery route
+    truck_1_ordered_addresses = SortingAlgo.plan_route(unsorted_packages_for_truck_1, distances)
+
+    # Create truck and load in packages
     truck_1 = Truck.Truck(1)
+    for miles, package in truck_1_ordered_addresses:
+        truck_1.load_package(package)
 
     # Load packages into package_list
     for id in package_ids_to_deliver_truck1:
         package = hash_table.search(id)
         truck_1.load_package(package)
 
-    ordered_addresses = []
-    current_address = "4001 South 700 East"
+    # truck_1_ordered_addresses = SortingAlgo.plan_route(truck_1, distances)
 
-    # Sorting algo
-    while truck_1.packages_still_on_truck():
-        dst_list = []
+    # # Print for troubleshooting
+    # print("ordered addresses: ")
+    # for miles, package in ordered_addresses:
+    #     if len(str(miles)) < 3:
+    #         print(miles, "\t\t", package.id, "\t", package.delivery_address, "\t")
+    #     else:
+#         print(miles, "\t", package.id, "\t" if len(str(package.id)) > 1 else "\t\t", package.delivery_address, "\t")
 
-        # Load package distances & select the first closest destination
-        for package in truck_1.get_packages_on_truck():
-            dst_list.append((distances[current_address][package.delivery_address], package))
+    # Make truck iterate through packages_on_truck and deliver in given order
 
-        dst_list.sort(key=lambda x: x[0])
-        ordered_addresses.append(dst_list[0])
-        i = 1
-        miles = dst_list[0][0]
-        current_package = dst_list[0][1]
-        current_address = current_package.delivery_address
-        truck_1.deliver_packages(current_address, miles)
-        for miles, package in dst_list:
-            if package.delivery_address == current_address and package != current_package:
-                ordered_addresses.append((0, package))
-                truck_1.deliver_packages(package.delivery_address, 0)
-
-    # Print for troubleshooting
-    print("ordered addresses: ")
-    for miles, package in ordered_addresses:
-        if len(str(miles)) < 3:
-            print(miles, "\t\t", package.id, "\t", package.delivery_address, "\t")
-        else:
-            print(miles, "\t", package.id, "\t" if len(str(package.id)) > 1 else "\t\t", package.delivery_address, "\t")
-
-    for miles, package in ordered_addresses:
+    for miles, package in truck_1_ordered_addresses:
         print("id:", package.id, "miles:", miles, "\t\t", "Package", package.status)
+
+
 
 
 if __name__ == "__main__":
