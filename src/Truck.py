@@ -6,15 +6,15 @@ class Truck:
     MAX_PACKAGES = 16  # Maximum amount of packages truck can carry at once
     HOME_ADDRESS = '4001 South 700 East (84107)'
 
-    packages_on_truck = []  # Packages currently loaded onto truck
-    total_miles_traveled = 0.0
-
     def __init__(self, truck_id):
         self.truck_id = truck_id
         self.timeTracker = TimeTracker.TimeTracker()
+        self.packages_on_truck = []  # Packages currently loaded onto truck
+        self.total_miles_traveled = 0.0
 
     def __repr__(self):
-        pass  # list total miles traveled, packages currently loaded
+        package_ids = [package.id for package in self.packages_on_truck]
+        return f"{self.truck_id}"  # list total miles traveled, packages currently loaded
 
     def drive_route_deliver_packages(self):
         for miles, package in self.packages_on_truck:

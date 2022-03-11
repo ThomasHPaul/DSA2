@@ -15,25 +15,38 @@ def main():
     hash_table = ChainingHashTable()
     for package in packages:
         hash_table.insert(package.id, package)
-
     distances = DistanceLoader.load_data(DISTANCE_SRC)
+
     package_ids_to_deliver_truck1 = [12, 13, 14, 15, 16, 18, 19, 20, 38, 33, 4, 8, 26, 34, 7, 29]
     unsorted_packages_for_truck_1 = [hash_table.search(id) for id in package_ids_to_deliver_truck1]
+
+    package_ids_to_deliver_truck2 = [2, 17, 35, 37, 28, 0, 30, 39, 24, 25, 31, 1, 32, 10, 27, 36]
+    unsorted_packages_for_truck_2 = [hash_table.search(id) for id in package_ids_to_deliver_truck2]
 
     # Plan delivery route
     # Data returned -> (miles to next address, package)
     truck_1_ordered_addresses = SortingAlgo.plan_route(unsorted_packages_for_truck_1, distances)
+    truck_2_ordered_addresses = SortingAlgo.plan_route(unsorted_packages_for_truck_2, distances)
 
-    # Create truck and load in packages
+    # Create trucks and load in packages
     truck_1 = Truck.Truck(1)
     for miles, package in truck_1_ordered_addresses:
         truck_1.load_package((miles, package))
 
+    truck_2 = Truck.Truck(2)
+    for miles, package in truck_2_ordered_addresses:
+        truck_2.load_package((miles, package))
+
     # Make truck iterate through packages_on_truck and deliver in given order
     truck_1.drive_route_deliver_packages()
+    truck_2.drive_route_deliver_packages()
 
     for miles, package in truck_1_ordered_addresses:
         print("id:", package.id, "miles:", miles, "\t\t", "Package", package.status)
+
+    for miles, package in truck_2_ordered_addresses:
+        print("id:", package.id, "miles:", miles, "\t\t", "Package", package.status)
+    print(truck_1.get_total_miles_traveled() + truck_2.get_total_miles_traveled())
 
 
 if __name__ == "__main__":
