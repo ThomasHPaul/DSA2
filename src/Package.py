@@ -7,8 +7,6 @@ class Package:
         self.zip_code = zip_code
         self.weight = weight
         self.status = 'at the hub'
-        self.other_packages_on_truck = []
-        self.delivery_time = None
 
     def load_package_on_truck(self, truck_number):
         self.status = f'en route on truck {truck_number}'
@@ -17,7 +15,6 @@ class Package:
     def deliver_package(self, time):
         # time should be a time_delta that is converted when displayed
         # by the interface
-        self.delivery_time = time
         self.status = f'delivered at {time}'
         return self
 
@@ -31,5 +28,5 @@ class Package:
             return False
 
     def __repr__(self):
-        return f'Package {self.id} is {self.status}'
+        return f'Package {self.id} {self.status}'
 

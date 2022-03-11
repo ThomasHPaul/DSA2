@@ -1,19 +1,24 @@
-class TimeTracker:
-    START_TIME = 480  # 8:00 AM
-    CURRENT_TIME = START_TIME
-
+class TimeTracker:  # 8:00 AM
     def add_time(self, time):
-        self.CURRENT_TIME += time
+        self.current_time = self.hypothetical_time
+
+    def add_hypothetical_time(self, time):
+        self.hypothetical_time += time
 
     def convert_to_military_time(self):
-        hours = int(self.CURRENT_TIME // 60)
-        minutes = str(int(self.CURRENT_TIME - (hours * 60)))
+        hours = int(self.current_time // 60)
+        minutes = str(int(self.current_time - (hours * 60)))
         if len(str(minutes)) == 1:
             minutes = "0" + minutes
         return f"{hours}:{minutes}"
 
     def __repr__(self):
         return f"Current time: {self.convert_to_military_time()}"
+
+    def __init__(self, start_time_in_minutes):
+        self.START_TIME = start_time_in_minutes
+        self.current_time = self.START_TIME
+        self.hypothetical_time = self.START_TIME
 
 
 if __name__ == "__main__":

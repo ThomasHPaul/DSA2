@@ -56,3 +56,15 @@ class ChainingHashTable:
             # print (key_value)
             if kv[0] == key:
                 bucket_list.remove([kv[0], kv[1]])
+
+    def pop(self, key):
+        item = self.search(key)
+        self.remove(key)
+        return item
+
+    def items(self):
+        item_list = []
+        for bucket in self.table:
+            for item in bucket:
+                item_list.append(item)
+        return item_list
