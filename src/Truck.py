@@ -1,4 +1,5 @@
 import TimeTracker
+import sys
 
 
 class Truck:
@@ -16,8 +17,7 @@ class Truck:
         return f"{self.truck_id}"  # list total miles traveled, packages currently loaded
 
     def drive_route_deliver_packages(self, time_in_minutes):
-
-        # compare hypothetical time to time_in_minutes
+        # Compare hypothetical time to time_in_minutes
         for miles, package in self.packages_on_truck[:]:
             minutes_time_delta = self._calculate_time_delta_from_miles(miles)
             self.timeTracker.add_hypothetical_time(minutes_time_delta)
@@ -26,8 +26,14 @@ class Truck:
                 self._deliver_package(miles, package)
                 self.packages_on_truck.pop(0)
             else:
-                pass
+                return
+                # sys.exit(f"Truck {self.truck_id} has delivered packages through given time")
 
+    def is_empty(self):
+        if len(self.packages_on_truck) == 0:
+            return True
+        else:
+            return False
         # proceed with delivery if hypothetical time < time_in_minutes
 
         # for miles, package in self.packages_on_truck:
