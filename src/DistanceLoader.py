@@ -1,5 +1,4 @@
 import csv
-import ChainingHashTable
 
 
 def load_data(src):

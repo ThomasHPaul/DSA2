@@ -9,7 +9,7 @@ def load_data(src):
         csv_reader = csv.reader(package_csv, delimiter=',')
 
         # Skip column names contained in the first line
-        headers = next(csv_reader)
+        next(csv_reader)
 
         for row in csv_reader:
             package_id = int(row[0])

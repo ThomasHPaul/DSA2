@@ -14,13 +14,12 @@ class ChainingHashTable:
 
     # Inserts a new item into the hash table.
     def insert(self, key, item):  # does both insert and update
-        # get the bucket list where this item will go.
+        # Get the bucket list where this item will go.
         bucket = hash(key) % len(self.table)
         bucket_list = self.table[bucket]
 
         # Update key if it is already in the bucket
         for kv in bucket_list:
-            # print (key_value)
             if kv[0] == key:
                 kv[1] = item
                 return True
@@ -39,7 +38,6 @@ class ChainingHashTable:
 
         # Search for the key in the bucket list
         for kv in bucket_list:
-            # print (key_value)
             if kv[0] == key:
                 return kv[1]  # value
         return None
@@ -52,18 +50,11 @@ class ChainingHashTable:
 
         # Remove the item from the bucket list if it is present.
         for kv in bucket_list:
-            # print (key_value)
             if kv[0] == key:
                 bucket_list.remove([kv[0], kv[1]])
 
+    # Returns an item with matching key then removes item
     def pop(self, key):
         item = self.search(key)
         self.remove(key)
         return item
-
-    def items(self):
-        item_list = []
-        for bucket in self.table:
-            for item in bucket:
-                item_list.append(item)
-        return item_list

@@ -86,10 +86,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-#
-# packageIDs_to_deliver_truck1 = [12,13,14,15,16,18,19,20,38,33,4,8,26,34,7,29]
-# packageIDs_to_deliver_truck2 = [2,17,35,37,28,0,30,39,24,25,31,1,32,10,27,36]
-
-
