@@ -67,16 +67,19 @@ def main():
         packages_remaining_at_wgu = [32, 10, 11, 27, 23, 22, 9, 21]
         unsorted_packages_for_truck_1 = [hash_table.pop(id) for id in packages_remaining_at_wgu]
         truck_1_ordered_addresses = SortingAlgo.plan_route(unsorted_packages_for_truck_1, distances)
+        truck_1_last_address = truck_1_ordered_addresses[-1][1].delivery_address
 
         for miles, package in truck_1_ordered_addresses:
             truck_1.load_package((miles, package))
 
         truck_1.drive_route_deliver_packages(time_in_minutes)
 
-    # Truck 2 returns so driver not left in field
+    # Trucks return so drivers not left in field
     # big-O Complexity: 1
     if truck_2.is_empty():
         truck_2.return_to_wgu(distances[truck_2_last_address][HOME_ADDRESS])
+    if truck_1.is_empty():
+        truck_1.return_to_wgu(distances[truck_1_last_address][HOME_ADDRESS])
 
     # Print summary of the day's progress
     # big-O Complexity: n
