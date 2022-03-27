@@ -88,7 +88,6 @@ def main():
     total_miles = truck_1_miles + truck_2_miles
     [print(package) for package in packages]
     print(f"Truck 1 miles driven: {truck_1_miles} \t\t Truck 2 miles driven: {truck_2_miles}")
-    # print(f"Truck 2 miles driven: {truck_2_miles}")
     print(f"Total miles driven: {total_miles}")
 
 
