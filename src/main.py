@@ -83,8 +83,13 @@ def main():
 
     # Print summary of the day's progress
     # big-O Complexity: n
-    print("Total miles driven: " + str(round(truck_1.get_total_miles_traveled() + truck_2.get_total_miles_traveled())))
+    truck_1_miles = round(truck_1.get_total_miles_traveled())
+    truck_2_miles = round(truck_2.get_total_miles_traveled())
+    total_miles = truck_1_miles + truck_2_miles
     [print(package) for package in packages]
+    print(f"Truck 1 miles driven: {truck_1_miles} \t\t Truck 2 miles driven: {truck_2_miles}")
+    # print(f"Truck 2 miles driven: {truck_2_miles}")
+    print(f"Total miles driven: {total_miles}")
 
 
 if __name__ == "__main__":
